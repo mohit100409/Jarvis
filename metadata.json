@@ -1,0 +1,6 @@
+{
+  "name": "JARVIS Study Companion",
+  "description": "Your supportive AI study partner with real-time reactive voice chat, an animated robotic face, vision processing, pdf reading, image & video makers, and student tools.",
+  "requestFramePermissions": ["camera", "microphone"],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

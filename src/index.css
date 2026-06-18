@@ -1,0 +1,481 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,100..900;1,100..900&display=swap');
+@import "tailwindcss";
+
+:root {
+  /* Default variables (Cosmic Theme) */
+  --bg-color-1: #04091e;
+  --bg-color-2: #010309;
+  --bg-gradient: radial-gradient(circle at top, var(--bg-color-1), var(--bg-color-2));
+  --text-main: #e2e8f0;
+  --text-muted: #94a3b8;
+  --accent: #00f3ff;
+  --accent-rgb: 0, 243, 255;
+  --accent-glow: rgba(0, 243, 255, 0.15);
+  --border-muted: rgba(0, 243, 255, 0.25);
+  --glass-bg: rgba(9, 21, 48, 0.55);
+  --panel-bg: rgba(3, 7, 24, 0.65);
+  --shadow-color: rgba(0, 243, 255, 0.08);
+
+  --font-family-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-family-mono: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-family-serif: "Inter", ui-sans-serif, system-ui, sans-serif;
+}
+
+/* Theme definitions */
+.theme-cosmic {
+  --bg-color-1: #04091e;
+  --bg-color-2: #010309;
+  --bg-gradient: radial-gradient(circle at top, var(--bg-color-1), var(--bg-color-2));
+  --text-main: #e2e8f0;
+  --text-muted: #94a3b8;
+  --accent: #00f3ff;
+  --accent-rgb: 0, 243, 255;
+  --accent-glow: rgba(0, 243, 255, 0.15);
+  --border-muted: rgba(0, 243, 255, 0.25);
+  --glass-bg: rgba(9, 21, 48, 0.55);
+  --panel-bg: rgba(3, 7, 24, 0.65);
+  --shadow-color: rgba(0, 243, 255, 0.08);
+
+  --font-family-sans: "Inter", ui-sans-serif, sans-serif;
+  --font-family-mono: "Inter", ui-sans-serif, sans-serif;
+  --font-family-serif: "Inter", ui-sans-serif, sans-serif;
+}
+
+.theme-slate {
+  --bg-color-1: #fcfcfd;
+  --bg-color-2: #edf0f5;
+  --bg-gradient: linear-gradient(135deg, var(--bg-color-1) 0%, var(--bg-color-2) 100%);
+  --text-main: #111827;
+  --text-muted: #4b5563;
+  --accent: #2563eb; /* Claude Blue */
+  --accent-rgb: 37, 99, 235;
+  --accent-glow: rgba(37, 99, 235, 0.08);
+  --border-muted: rgba(37, 99, 235, 0.2);
+  --glass-bg: rgba(255, 255, 255, 0.85);
+  --panel-bg: rgba(243, 244, 246, 0.75);
+  --shadow-color: rgba(37, 99, 235, 0.04);
+
+  /* Inter explicitly configured globally for slate */
+  --font-family-sans: "Inter", ui-sans-serif, sans-serif;
+  --font-family-mono: "Inter", ui-sans-serif, sans-serif;
+  --font-family-serif: "Inter", ui-sans-serif, sans-serif;
+}
+
+.theme-vintage {
+  --bg-color-1: #FAF6EE; /* Exquisite Warm Cream Rag Paper */
+  --bg-color-2: #EFEBDB; /* Deep antique parchment linen texture */
+  --bg-gradient: linear-gradient(180deg, var(--bg-color-1) 0%, var(--bg-color-2) 100%);
+  --text-main: #231F1C; /* Gallnut organic iron pen ink */
+  --text-muted: #65594F; /* Soft muted charcoal woodblock shadow */
+  --accent: #AC3B1D; /* Florentine Rust Terracotta Sanguine RED */
+  --accent-rgb: 172, 59, 29;
+  --accent-glow: rgba(172, 59, 29, 0.08);
+  --border-muted: rgba(172, 59, 29, 0.2);
+  --glass-bg: rgba(246, 241, 230, 0.93);
+  --panel-bg: rgba(239, 232, 219, 0.78);
+  --shadow-color: rgba(172, 59, 29, 0.02);
+
+  /* Inter configured globally for vintage */
+  --font-family-sans: "Inter", ui-sans-serif, sans-serif;
+  --font-family-mono: "Inter", ui-sans-serif, sans-serif;
+  --font-family-serif: "Inter", ui-sans-serif, sans-serif;
+
+  /* Chromatic filter matrix to simulate mellow, high-contrast woodblock parchment print */
+  filter: sepia(0.08) contrast(0.98) saturate(1.05) brightness(1.01);
+}
+
+@theme {
+  --font-sans: var(--font-family-sans), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-family-mono), ui-monospace, SFMono-Regular, monospace;
+  --font-serif: var(--font-family-serif), Georgia, serif;
+}
+
+@property --bg-color-1 {
+  syntax: "<color>";
+  inherits: true;
+  initial-value: #04091e;
+}
+@property --bg-color-2 {
+  syntax: "<color>";
+  inherits: true;
+  initial-value: #010309;
+}
+@property --text-main {
+  syntax: "<color>";
+  inherits: true;
+  initial-value: #e2e8f0;
+}
+@property --text-muted {
+  syntax: "<color>";
+  inherits: true;
+  initial-value: #94a3b8;
+}
+@property --accent {
+  syntax: "<color>";
+  inherits: true;
+  initial-value: #00f3ff;
+}
+@property --border-muted {
+  syntax: "<color>";
+  inherits: true;
+  initial-value: rgba(0, 243, 255, 0.25);
+}
+@property --glass-bg {
+  syntax: "<color>";
+  inherits: true;
+  initial-value: rgba(9, 21, 48, 0.55);
+}
+@property --panel-bg {
+  syntax: "<color>";
+  inherits: true;
+  initial-value: rgba(3, 7, 24, 0.65);
+}
+
+@layer base {
+  body {
+    background: var(--bg-gradient);
+    color: var(--text-main);
+    font-family: var(--font-sans);
+    min-height: 100vh;
+    transition: 
+      background 1s cubic-bezier(0.25, 1, 0.5, 1),
+      color 1s cubic-bezier(0.25, 1, 0.5, 1),
+      font-family 0.6s ease,
+      --bg-color-1 1s cubic-bezier(0.25, 1, 0.5, 1),
+      --bg-color-2 1s cubic-bezier(0.25, 1, 0.5, 1),
+      --accent 1s cubic-bezier(0.25, 1, 0.5, 1),
+      --text-main 1s cubic-bezier(0.25, 1, 0.5, 1),
+      --text-muted 1s cubic-bezier(0.25, 1, 0.5, 1),
+      --border-muted 1s cubic-bezier(0.25, 1, 0.5, 1),
+      --glass-bg 1s cubic-bezier(0.25, 1, 0.5, 1),
+      --panel-bg 1s cubic-bezier(0.25, 1, 0.5, 1);
+  }
+}
+
+/* Base style transition default settings for interactive elements to blend perfectly on theme transition */
+#app-root-shell, .cyber-glass, button, input, select, textarea, div, p, span, h1, h2, h3, h4, h5, h6, aside, main, header, footer {
+  transition: 
+    background-color 1.2s cubic-bezier(0.25, 1, 0.5, 1),
+    background-image 1.2s cubic-bezier(0.25, 1, 0.5, 1),
+    border-color 1s cubic-bezier(0.25, 1, 0.5, 1),
+    color 1s cubic-bezier(0.25, 1, 0.5, 1),
+    box-shadow 1.2s cubic-bezier(0.25, 1, 0.5, 1),
+    text-shadow 1.2s cubic-bezier(0.25, 1, 0.5, 1),
+    backdrop-filter 1.2s cubic-bezier(0.25, 1, 0.5, 1),
+    -webkit-backdrop-filter 1.2s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+/* Custom scrollbar for cybernetic panels */
+::-webkit-scrollbar {
+  width: 5px;
+  height: 5px;
+}
+::-webkit-scrollbar-track {
+  background: rgba(1, 3, 9, 0.1);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--accent-glow);
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--accent);
+}
+
+/* Glassmorphism effects mapped to CSS variables */
+.theme-gradient-text {
+  background: linear-gradient(to right, var(--accent) 0%, var(--text-main) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  text-fill-color: transparent;
+  filter: drop-shadow(0 0 10px var(--accent-glow));
+}
+
+.cyber-glass {
+  background: var(--glass-bg);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid var(--border-muted);
+  box-shadow: 0 0 20px var(--shadow-color);
+  transition: all 0.3s ease;
+}
+
+.cyber-glass-glow {
+  box-shadow: 0 0 25px var(--accent-glow), inset 0 0 10px var(--accent-glow);
+}
+
+.glow-btn:hover {
+  box-shadow: 0 0 15px var(--accent-glow);
+  border-color: var(--accent);
+  background: var(--accent-glow);
+}
+
+/* Moving laser scanner scanline beam */
+.scanner-scanline {
+  background: linear-gradient(
+    to bottom,
+    rgba(var(--accent-rgb), 0) 0%,
+    rgba(var(--accent-rgb), 0) 10%,
+    rgba(var(--accent-rgb), 0.4) 50%,
+    rgba(var(--accent-rgb), 0.8) 51%,
+    rgba(var(--accent-rgb), 0) 55%,
+    rgba(var(--accent-rgb), 0) 100%
+  );
+  background-size: 100% 25px;
+  animation: scannerSweep 2s infinite linear;
+}
+
+@keyframes scannerSweep {
+  0% {
+    background-position: 0% 0%;
+  }
+  100% {
+    background-position: 0% 100%;
+  }
+}
+
+@keyframes shimmer {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+
+/* Custom Global Legibility Settings for Chat message bubble with Inter */
+.chat-message-bubble,
+.chat-message-bubble p,
+.chat-message-bubble li,
+.chat-message-bubble span,
+.chat-message-bubble div,
+.chat-message-bubble h1,
+.chat-message-bubble h2,
+.chat-message-bubble h3,
+.chat-message-bubble h4,
+.chat-message-bubble h5,
+.chat-message-bubble h6 {
+  line-height: 1.625 !important;
+  letter-spacing: -0.012em !important;
+}
+
+/* DYNAMIC OVERRIDES FOR SLATE & VINTAGE (LIGHT THEMES) */
+.theme-slate, .theme-vintage {
+  /* Override backgrounds */
+  background: var(--bg-gradient) !important;
+  color: var(--text-main) !important;
+
+  /* Theme-aware Text Gradient Overrides */
+  .theme-gradient-text {
+    background: linear-gradient(to right, var(--accent) 0%, var(--text-main) 100%) !important;
+    -webkit-background-clip: text !important;
+    -webkit-text-fill-color: transparent !important;
+    background-clip: text !important;
+    text-fill-color: transparent !important;
+    filter: drop-shadow(0 0 10px var(--accent-glow)) !important;
+  }
+
+  /* Text color overrides and opacity mapping */
+  [class*="text-[#00f3ff]"]:not([class*="/"]), .text-cyan-400, .text-cyan-300 {
+    color: var(--accent) !important;
+  }
+  
+  [class*="text-[#00f3ff]/90"] { color: rgba(var(--accent-rgb), 0.9) !important; }
+  [class*="text-[#00f3ff]/85"] { color: rgba(var(--accent-rgb), 0.85) !important; }
+  [class*="text-[#00f3ff]/80"] { color: rgba(var(--accent-rgb), 0.8) !important; }
+  [class*="text-[#00f3ff]/70"] { color: rgba(var(--accent-rgb), 0.7) !important; }
+  [class*="text-[#00f3ff]/60"] { color: rgba(var(--accent-rgb), 0.6) !important; }
+  [class*="text-[#00f3ff]/50"] { color: rgba(var(--accent-rgb), 0.5) !important; }
+  [class*="text-[#00f3ff]/45"] { color: rgba(var(--accent-rgb), 0.45) !important; }
+  [class*="text-[#00f3ff]/40"] { color: rgba(var(--accent-rgb), 0.4) !important; }
+  [class*="text-[#00f3ff]/35"] { color: rgba(var(--accent-rgb), 0.35) !important; }
+  [class*="text-[#00f3ff]/30"] { color: rgba(var(--accent-rgb), 0.3) !important; }
+  [class*="text-[#00f3ff]/20"] { color: rgba(var(--accent-rgb), 0.2) !important; }
+  [class*="text-[#00f3ff]/10"] { color: rgba(var(--accent-rgb), 0.1) !important; }
+
+  [class*="text-[#cffafe]"] {
+    color: var(--text-main) !important;
+  }
+  .text-white, .text-slate-100, .text-slate-200 {
+    color: var(--text-main) !important;
+  }
+  .text-slate-400, .text-slate-500, .text-white/60 {
+    color: var(--text-muted) !important;
+  }
+
+  /* Borders overrides and opacity mapping */
+  [class*="border-[#00f3ff]"]:not([class*="/"]), .border-slate-800, .border-slate-800\/60 {
+    border-color: var(--border-muted) !important;
+  }
+  
+  [class*="border-[#00f3ff]/55"] { border-color: rgba(var(--accent-rgb), 0.55) !important; }
+  [class*="border-[#00f3ff]/50"] { border-color: rgba(var(--accent-rgb), 0.5) !important; }
+  [class*="border-[#00f3ff]/45"] { border-color: rgba(var(--accent-rgb), 0.45) !important; }
+  [class*="border-[#00f3ff]/40"] { border-color: rgba(var(--accent-rgb), 0.4) !important; }
+  [class*="border-[#00f3ff]/35"] { border-color: rgba(var(--accent-rgb), 0.35) !important; }
+  [class*="border-[#00f3ff]/30"] { border-color: rgba(var(--accent-rgb), 0.3) !important; }
+  [class*="border-[#00f3ff]/25"] { border-color: rgba(var(--accent-rgb), 0.25) !important; }
+  [class*="border-[#00f3ff]/20"] { border-color: rgba(var(--accent-rgb), 0.2) !important; }
+  [class*="border-[#00f3ff]/15"] { border-color: rgba(var(--accent-rgb), 0.15) !important; }
+  [class*="border-[#00f3ff]/10"] { border-color: rgba(var(--accent-rgb), 0.1) !important; }
+
+  /* Backgrounds with opacity slash */
+  [class*="bg-[#00f3ff]/"] {
+    background-color: var(--accent-glow) !important;
+  }
+
+  [class*="bg-[#00f3ff]/35"] { background-color: rgba(var(--accent-rgb), 0.35) !important; }
+  [class*="bg-[#00f3ff]/25"] { background-color: rgba(var(--accent-rgb), 0.25) !important; }
+  [class*="bg-[#00f3ff]/20"] { background-color: rgba(var(--accent-rgb), 0.2) !important; }
+  [class*="bg-[#00f3ff]/15"] { background-color: rgba(var(--accent-rgb), 0.15) !important; }
+  [class*="bg-[#00f3ff]/10"] { background-color: rgba(var(--accent-rgb), 0.1) !important; }
+  [class*="bg-[#00f3ff]/5"]  { background-color: rgba(var(--accent-rgb), 0.05) !important; }
+
+  /* Solid accent headers, buttons, labels */
+  [class*="bg-[#00f3ff]"]:not([class*="/"]) {
+    background-color: var(--accent) !important;
+    color: var(--bg-color-1) !important;
+  }
+
+  /* Core UI Form controls */
+  input, select, textarea {
+    background-color: var(--panel-bg) !important;
+    border-color: var(--border-muted) !important;
+    color: var(--text-main) !important;
+  }
+  
+  [class*="bg-[#030718]"] {
+    background-color: var(--panel-bg) !important;
+  }
+
+  [class*="bg-[#020512]"] {
+    background-color: var(--panel-bg) !important;
+  }
+
+  [class*="bg-[#070c1f]"] {
+    background-color: var(--panel-bg) !important;
+  }
+
+  [class*="bg-slate-950"] {
+    background-color: var(--panel-bg) !important;
+  }
+
+  [class*="bg-[#050b1a]"] {
+    background-color: var(--panel-bg) !important;
+  }
+
+  [class*="bg-[#050a18]"] {
+    background-color: var(--panel-bg) !important;
+  }
+
+  [class*="bg-[#03091e]"] {
+    background-color: var(--panel-bg) !important;
+  }
+
+  [class*="bg-[#040816]"] {
+    background-color: var(--panel-bg) !important;
+  }
+
+  [class*="bg-[#070b19]"] {
+    background-color: var(--panel-bg) !important;
+  }
+
+  [class*="bg-[#0c1530]"] {
+    background-color: var(--panel-bg) !important;
+  }
+
+  /* Ensure transparent backgrounds are overlaid with glass transparency, NOT solid colors */
+  [class*="bg-[#091530]/"] {
+    background-color: var(--glass-bg) !important;
+  }
+
+  /* Solid panel styles for clean light theme card borders */
+  [class*="bg-[#091530]"]:not([class*="/"]) {
+    background-color: var(--panel-bg) !important;
+  }
+
+  [class*="bg-[#0a1435]"] {
+    background-color: var(--panel-bg) !important;
+  }
+
+  [class*="bg-[#050917]"] {
+    background-color: var(--panel-bg) !important;
+  }
+
+  [class*="bg-black/50"], [class*="bg-black/40"], [class*="bg-black/45"], [class*="bg-black/65"], [class*="bg-black/35"], [class*="bg-[#0c1530]/"] {
+    background-color: var(--glass-bg) !important;
+  }
+
+  /* Message response bubble formatting for Claude AI aesthetic */
+  .chat-message-bubble {
+    font-family: var(--font-sans) !important;
+    line-height: 1.625 !important;
+    letter-spacing: -0.012em !important;
+  }
+  
+  /* Make primary text contents of message blocks elegant Serif like Claude.ai */
+  .chat-message-bubble p, 
+  .chat-message-bubble div.font-mono,
+  .chat-message-bubble span.font-sans {
+    font-family: var(--font-serif) !important;
+    font-size: 11.5px !important;
+    line-height: 1.625 !important;
+    letter-spacing: -0.012em !important;
+  }
+
+  /* Ensure all markdown formatting like lists, headers inside bubbles use serif */
+  .chat-message-bubble li,
+  .chat-message-bubble .font-sans {
+    font-family: var(--font-serif) !important;
+    line-height: 1.625 !important;
+    letter-spacing: -0.012em !important;
+  }
+
+  /* Keep code blocks inside messages locked into mono */
+  .chat-message-bubble pre,
+  .chat-message-bubble code {
+    font-family: var(--font-mono) !important;
+    background-color: var(--panel-bg) !important;
+    border-color: var(--border-muted) !important;
+    font-size: 10px !important;
+  }
+
+  /* Cyber Grid and background elements decoration adjustments */
+  #cyberspace-grid {
+    opacity: 0.045 !important;
+    background-image: linear-gradient(to right, var(--accent) 0.03rem, transparent 0.03rem),
+                      linear-gradient(to bottom, var(--accent) 0.03rem, transparent 0.03rem) !important;
+  }
+  
+  .scanner-scanline {
+    opacity: 0.12 !important;
+  }
+
+  /* Glow indicators override */
+  .shadow-\[0_0_15px_rgba\(0\,243\,255\,0\.15\)\] {
+    box-shadow: 0 0 15px var(--accent-glow) !important;
+  }
+}
+
+/* Specific Vintage Ruled Grid Pattern & Hand-pressed Print Accents */
+.theme-vintage #cyberspace-grid {
+  opacity: 0.12 !important;
+  background-image: 
+    linear-gradient(to bottom, rgba(172, 59, 29, 0.09) 1px, transparent 1px) !important;
+  background-size: 100% 1.625rem !important; /* Beautiful traditional French-ruled notebook spacing */
+  filter: blur(0.2px);
+}
+
+.theme-vintage .scanner-scanline {
+  background: linear-gradient(
+    to bottom,
+    rgba(172, 59, 29, 0) 0%,
+    rgba(172, 59, 29, 0.1) 40%,
+    rgba(172, 59, 29, 0.25) 50%,
+    rgba(172, 59, 29, 0.1) 60%,
+    rgba(172, 59, 29, 0) 100%
+  ) !important;
+  opacity: 0.08 !important;
+  animation-duration: 3.5s !important; /* Slower, more rhythmic old mechanism pulse */
+}

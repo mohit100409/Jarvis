@@ -1,0 +1,102 @@
+{
+  "entities": {
+    "UserProfile": {
+      "title": "UserProfile",
+      "description": "User profile settings including name, contact details, birth date, avatar and cloud sync state.",
+      "type": "object",
+      "properties": {
+        "username": { "type": "string" },
+        "gmail": { "type": "string" },
+        "dateOfBirth": { "type": "string" },
+        "backupEnabled": { "type": "boolean" },
+        "avatarInitials": { "type": "string" },
+        "avatarImage": { "type": "string" },
+        "studentLevel": { "type": "string" },
+        "jarvisTone": { "type": "string" },
+        "selectedVoiceName": { "type": "string" },
+        "googleVoiceName": { "type": "string" },
+        "voiceRate": { "type": "number" },
+        "voicePitch": { "type": "number" },
+        "textLanguage": { "type": "string" },
+        "voiceLanguage": { "type": "string" },
+        "connectedAppsStr": { "type": "string" },
+        "jarvisMemoriesStr": { "type": "string" },
+        "chatHistoryItemsStr": { "type": "string" },
+        "jarvisBehaviorRulesStr": { "type": "string" },
+        "updatedAt": { "type": "string" }
+      },
+      "required": ["username"]
+    },
+    "ChatDialogue": {
+      "title": "ChatDialogue",
+      "description": "Historical message logs in the dialog thread synced securely to Google Cloud.",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "sender": { "type": "string" },
+        "text": { "type": "string" },
+        "timestamp": { "type": "string" }
+      },
+      "required": ["id", "sender", "text"]
+    },
+    "KeepNote": {
+      "title": "KeepNote",
+      "description": "User notes synced securely to Firestore acting as either a Keep fallback or direct database entity.",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "title": { "type": "string" },
+        "body": { "type": "string" },
+        "timestamp": { "type": "string" }
+      },
+      "required": ["id", "title", "body"]
+    },
+    "ChatMessage": {
+      "title": "ChatMessage",
+      "description": "Messages from collaborative chat channels synced to Firestore.",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "spaceId": { "type": "string" },
+        "sender": { "type": "string" },
+        "text": { "type": "string" },
+        "timestamp": { "type": "string" }
+      },
+      "required": ["id", "spaceId", "sender", "text"]
+    },
+    "UserFeedback": {
+      "title": "UserFeedback",
+      "description": "Student or operator feedback logs specifying suggestions, bugs, or general feedback experience.",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "feedbackType": { "type": "string" },
+        "message": { "type": "string" },
+        "timestamp": { "type": "string" }
+      },
+      "required": ["id", "feedbackType", "message"]
+    }
+  },
+  "firestore": {
+    "/operators/{operatorId}": {
+      "schema": "UserProfile",
+      "description": "Document holding setting parameters, personal information, and avatar data URL."
+    },
+    "/operators/{operatorId}/dialogues/{dialogueId}": {
+      "schema": "ChatDialogue",
+      "description": "Sub-collection of interaction dialogues with timestamps."
+    },
+    "/operators/{operatorId}/keep_notes/{noteId}": {
+      "schema": "KeepNote",
+      "description": "Sub-collection for keeping notes synced with Firestore."
+    },
+    "/operators/{operatorId}/chat_messages/{messageId}": {
+      "schema": "ChatMessage",
+      "description": "Sub-collection for storing community or room-specific messages."
+    },
+    "/operators/{operatorId}/feedbacks/{feedbackId}": {
+      "schema": "UserFeedback",
+      "description": "Sub-collection of user submitted feedback reports."
+    }
+  }
+}

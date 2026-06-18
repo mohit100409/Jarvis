@@ -1,0 +1,107 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // Global Safety Net default deny
+    match /{document=**} {
+      allow read, write: if false;
+    }
+
+    // Helper functions
+    function isValidId(id) {
+      return id is string && id.size() > 0 && id.size() <= 128;
+    }
+
+    function incoming() {
+      return request.resource.data;
+    }
+
+    function existing() {
+      return resource.data;
+    }
+
+    // Schema Validation Helpers
+    function isValidUserProfile(data) {
+      return data.username is string && data.username.size() <= 128
+        && (data.gmail == null || (data.gmail is string && data.gmail.size() <= 128))
+        && (data.dateOfBirth == null || (data.dateOfBirth is string && data.dateOfBirth.size() <= 64))
+        && (data.backupEnabled == null || data.backupEnabled is bool)
+        && (data.avatarInitials == null || (data.avatarInitials is string && data.avatarInitials.size() <= 20))
+        && (data.avatarImage == null || (data.avatarImage is string && data.avatarImage.size() <= 1048576)) // Limit base64 to 1MB
+        && (data.studentLevel == null || (data.studentLevel is string && data.studentLevel.size() <= 128))
+        && (data.jarvisTone == null || (data.jarvisTone is string && data.jarvisTone.size() <= 128))
+        && (data.selectedVoiceName == null || (data.selectedVoiceName is string && data.selectedVoiceName.size() <= 128))
+        && (data.googleVoiceName == null || (data.googleVoiceName is string && data.googleVoiceName.size() <= 128))
+        && (data.voiceRate == null || (data.voiceRate is number))
+        && (data.voicePitch == null || (data.voicePitch is number))
+        && (data.textLanguage == null || (data.textLanguage is string && data.textLanguage.size() <= 64))
+        && (data.voiceLanguage == null || (data.voiceLanguage is string && data.voiceLanguage.size() <= 64))
+        && (data.connectedAppsStr == null || (data.connectedAppsStr is string && data.connectedAppsStr.size() <= 10000))
+        && (data.jarvisMemoriesStr == null || (data.jarvisMemoriesStr is string && data.jarvisMemoriesStr.size() <= 100000))
+        && (data.chatHistoryItemsStr == null || (data.chatHistoryItemsStr is string && data.chatHistoryItemsStr.size() <= 1048576))
+        && (data.jarvisBehaviorRulesStr == null || (data.jarvisBehaviorRulesStr is string && data.jarvisBehaviorRulesStr.size() <= 100000))
+        && (data.updatedAt == null || (data.updatedAt is string && data.updatedAt.size() <= 128));
+    }
+
+    function isValidChatDialogue(data) {
+      return data.id is string && data.id.size() <= 128
+        && data.sender is string && (data.sender == 'user' || data.sender == 'jarvis')
+        && data.text is string && data.text.size() <= 50000;
+    }
+
+    function isValidKeepNote(data) {
+      return data.id is string && data.id.size() <= 128
+        && data.title is string && data.title.size() <= 500
+        && data.body is string && data.body.size() <= 20000;
+    }
+
+    function isValidChatMessage(data) {
+      return data.id is string && data.id.size() <= 128
+        && data.spaceId is string && data.spaceId.size() <= 128
+        && data.sender is string && data.sender.size() <= 128
+        && data.text is string && data.text.size() <= 10000;
+    }
+
+    function isValidUserFeedback(data) {
+      return data.id is string && data.id.size() <= 128
+        && data.feedbackType is string && data.feedbackType.size() <= 128
+        && data.message is string && data.message.size() <= 10000
+        && (data.timestamp == null || (data.timestamp is string && data.timestamp.size() <= 128));
+    }
+
+    // Collection matches
+    match /operators/{operatorId} {
+      allow read: if isValidId(operatorId);
+      allow create, update: if isValidId(operatorId) && isValidUserProfile(incoming());
+      allow delete: if false; // Profiles are immortal
+
+      match /dialogues/{dialogueId} {
+        allow get: if isValidId(operatorId) && isValidId(dialogueId);
+        allow list: if isValidId(operatorId);
+        allow create, update: if isValidId(operatorId) && isValidId(dialogueId) && isValidChatDialogue(incoming());
+        allow delete: if isValidId(operatorId) && isValidId(dialogueId);
+      }
+
+      match /keep_notes/{noteId} {
+        allow get: if isValidId(operatorId) && isValidId(noteId);
+        allow list: if isValidId(operatorId);
+        allow create, update: if isValidId(operatorId) && isValidId(noteId) && isValidKeepNote(incoming());
+        allow delete: if isValidId(operatorId) && isValidId(noteId);
+      }
+
+      match /chat_messages/{messageId} {
+        allow get: if isValidId(operatorId) && isValidId(messageId);
+        allow list: if isValidId(operatorId);
+        allow create, update: if isValidId(operatorId) && isValidId(messageId) && isValidChatMessage(incoming());
+        allow delete: if isValidId(operatorId) && isValidId(messageId);
+      }
+
+      match /feedbacks/{feedbackId} {
+        allow get: if isValidId(operatorId) && isValidId(feedbackId);
+        allow list: if isValidId(operatorId);
+        allow create, update: if isValidId(operatorId) && isValidId(feedbackId) && isValidUserFeedback(incoming());
+        allow delete: if isValidId(operatorId) && isValidId(feedbackId);
+      }
+    }
+  }
+}
