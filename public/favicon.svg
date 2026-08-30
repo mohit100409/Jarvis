@@ -1,0 +1,87 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="100%" height="100%">
+  <defs>
+    <radialGradient id="jarvisCoreGlow" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#ffffff" stop-opacity="1"/>
+      <stop offset="25%" stop-color="#38bdf8" stop-opacity="0.9"/>
+      <stop offset="60%" stop-color="#00f3ff" stop-opacity="0.6"/>
+      <stop offset="90%" stop-color="#0284c7" stop-opacity="0.2"/>
+      <stop offset="100%" stop-color="#0284c7" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="cyanArcGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#00f3ff"/>
+      <stop offset="50%" stop-color="#38bdf8"/>
+      <stop offset="100%" stop-color="#0284c7"/>
+    </linearGradient>
+    <linearGradient id="ringGrad2" x1="0%" y1="100%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#0284c7" stop-opacity="0.8"/>
+      <stop offset="50%" stop-color="#00f3ff" stop-opacity="0.9"/>
+      <stop offset="100%" stop-color="#7dd3fc" stop-opacity="1"/>
+    </linearGradient>
+    <filter id="glowEffect" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="8" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+    <filter id="subtleGlow" x="-30%" y="-30%" width="160%" height="160%">
+      <feGaussianBlur stdDeviation="3" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+
+  <!-- Ambient background glow behind reactor -->
+  <circle cx="256" cy="256" r="230" fill="url(#jarvisCoreGlow)" opacity="0.35"/>
+
+  <!-- Outermost Tech Ring with notches -->
+  <circle cx="256" cy="256" r="224" fill="none" stroke="#00f3ff" stroke-width="2.5" stroke-dasharray="8 6 24 6 48 8" opacity="0.6"/>
+  <circle cx="256" cy="256" r="212" fill="none" stroke="#38bdf8" stroke-width="1.5" stroke-dasharray="4 8" opacity="0.45"/>
+  <circle cx="256" cy="256" r="198" fill="none" stroke="url(#cyanArcGrad)" stroke-width="3" opacity="0.75" filter="url(#subtleGlow)"/>
+
+  <!-- Compass / Tech Crosshairs -->
+  <line x1="256" y1="20" x2="256" y2="46" stroke="#00f3ff" stroke-width="3.5" stroke-linecap="round" filter="url(#subtleGlow)"/>
+  <line x1="256" y1="466" x2="256" y2="492" stroke="#00f3ff" stroke-width="3.5" stroke-linecap="round" filter="url(#subtleGlow)"/>
+  <line x1="20" y1="256" x2="46" y2="256" stroke="#00f3ff" stroke-width="3.5" stroke-linecap="round" filter="url(#subtleGlow)"/>
+  <line x1="466" y1="256" x2="492" y2="256" stroke="#00f3ff" stroke-width="3.5" stroke-linecap="round" filter="url(#subtleGlow)"/>
+
+  <!-- 10 Reactor Core Coils (Arc Reactor segments) -->
+  <g filter="url(#subtleGlow)">
+    <g transform="translate(256, 256)">
+      <path d="M -16 -185 L 16 -185 L 12 -142 L -12 -142 Z" fill="#00f3ff" opacity="0.9" />
+      <rect x="-10" y="-180" width="20" height="34" rx="3" fill="#ffffff" opacity="0.85" />
+      <g transform="rotate(36)"><path d="M -16 -185 L 16 -185 L 12 -142 L -12 -142 Z" fill="#00f3ff" opacity="0.9" /><rect x="-10" y="-180" width="20" height="34" rx="3" fill="#ffffff" opacity="0.85" /></g>
+      <g transform="rotate(72)"><path d="M -16 -185 L 16 -185 L 12 -142 L -12 -142 Z" fill="#00f3ff" opacity="0.9" /><rect x="-10" y="-180" width="20" height="34" rx="3" fill="#ffffff" opacity="0.85" /></g>
+      <g transform="rotate(108)"><path d="M -16 -185 L 16 -185 L 12 -142 L -12 -142 Z" fill="#00f3ff" opacity="0.9" /><rect x="-10" y="-180" width="20" height="34" rx="3" fill="#ffffff" opacity="0.85" /></g>
+      <g transform="rotate(144)"><path d="M -16 -185 L 16 -185 L 12 -142 L -12 -142 Z" fill="#00f3ff" opacity="0.9" /><rect x="-10" y="-180" width="20" height="34" rx="3" fill="#ffffff" opacity="0.85" /></g>
+      <g transform="rotate(180)"><path d="M -16 -185 L 16 -185 L 12 -142 L -12 -142 Z" fill="#00f3ff" opacity="0.9" /><rect x="-10" y="-180" width="20" height="34" rx="3" fill="#ffffff" opacity="0.85" /></g>
+      <g transform="rotate(216)"><path d="M -16 -185 L 16 -185 L 12 -142 L -12 -142 Z" fill="#00f3ff" opacity="0.9" /><rect x="-10" y="-180" width="20" height="34" rx="3" fill="#ffffff" opacity="0.85" /></g>
+      <g transform="rotate(252)"><path d="M -16 -185 L 16 -185 L 12 -142 L -12 -142 Z" fill="#00f3ff" opacity="0.9" /><rect x="-10" y="-180" width="20" height="34" rx="3" fill="#ffffff" opacity="0.85" /></g>
+      <g transform="rotate(288)"><path d="M -16 -185 L 16 -185 L 12 -142 L -12 -142 Z" fill="#00f3ff" opacity="0.9" /><rect x="-10" y="-180" width="20" height="34" rx="3" fill="#ffffff" opacity="0.85" /></g>
+      <g transform="rotate(324)"><path d="M -16 -185 L 16 -185 L 12 -142 L -12 -142 Z" fill="#00f3ff" opacity="0.9" /><rect x="-10" y="-180" width="20" height="34" rx="3" fill="#ffffff" opacity="0.85" /></g>
+    </g>
+  </g>
+
+  <!-- Mid Segment Ring Structure -->
+  <circle cx="256" cy="256" r="140" fill="none" stroke="#00f3ff" stroke-width="4" opacity="0.95" filter="url(#subtleGlow)"/>
+  <circle cx="256" cy="256" r="128" fill="none" stroke="#38bdf8" stroke-width="2" stroke-dasharray="12 8 36 8" opacity="0.7"/>
+  <circle cx="256" cy="256" r="106" fill="none" stroke="url(#ringGrad2)" stroke-width="3" opacity="0.85"/>
+
+  <!-- Inner High-Tech Hexagonal / Geometric Nodes -->
+  <g transform="translate(256, 256)" filter="url(#subtleGlow)">
+    <polygon points="0,-95 82,-47 82,47 0,95 -82,47 -82,-47" fill="none" stroke="#00f3ff" stroke-width="2.5" opacity="0.75"/>
+    <polygon points="0,-78 67,-39 67,39 0,78 -67,39 -67,-39" fill="none" stroke="#ffffff" stroke-width="1.5" opacity="0.85"/>
+  </g>
+
+  <!-- Inner Core Iris Ring -->
+  <circle cx="256" cy="256" r="64" fill="none" stroke="#00f3ff" stroke-width="3.5" opacity="0.95" filter="url(#subtleGlow)"/>
+  <circle cx="256" cy="256" r="54" fill="none" stroke="#ffffff" stroke-width="2" stroke-dasharray="6 6" opacity="0.9"/>
+
+  <!-- Blazing Core Energy Center -->
+  <circle cx="256" cy="256" r="44" fill="url(#jarvisCoreGlow)" filter="url(#glowEffect)"/>
+  <circle cx="256" cy="256" r="28" fill="#ffffff" opacity="0.95" filter="url(#subtleGlow)"/>
+  <circle cx="256" cy="256" r="12" fill="#e0f2fe"/>
+</svg>

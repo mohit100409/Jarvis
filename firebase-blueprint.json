@@ -23,80 +23,87 @@
         "jarvisMemoriesStr": { "type": "string" },
         "chatHistoryItemsStr": { "type": "string" },
         "jarvisBehaviorRulesStr": { "type": "string" },
+        "geminiKey": { "type": "string" },
+        "geminiKeyPoolStr": { "type": "string" },
+        "disabledGeminiKeysStr": { "type": "string" },
+        "aiPlanMode": { "type": "string" },
+        "appTheme": { "type": "string" },
+        "jarvisVolumePreset": { "type": "string" },
+        "voiceEngine": { "type": "string" },
+        "baseStyleTone": { "type": "string" },
+        "charWarm": { "type": "string" },
+        "charEnthusiastic": { "type": "string" },
+        "charHeaders": { "type": "string" },
+        "charEmoji": { "type": "string" },
+        "isFastAnswers": { "type": "boolean" },
+        "customInstructions": { "type": "string" },
+        "isReferenceMemories": { "type": "boolean" },
+        "isReferenceHistory": { "type": "boolean" },
+        "nicknameMemory": { "type": "string" },
+        "occupationMemory": { "type": "string" },
+        "moreAboutUser": { "type": "string" },
+        "profileHandle": { "type": "string" },
         "updatedAt": { "type": "string" }
       },
       "required": ["username"]
     },
-    "ChatDialogue": {
-      "title": "ChatDialogue",
-      "description": "Historical message logs in the dialog thread synced securely to Google Cloud.",
+    "ChatSession": {
+      "title": "ChatSession",
+      "description": "Full chat conversation session with messages and metadata.",
       "type": "object",
       "properties": {
         "id": { "type": "string" },
-        "sender": { "type": "string" },
         "text": { "type": "string" },
-        "timestamp": { "type": "string" }
-      },
-      "required": ["id", "sender", "text"]
-    },
-    "KeepNote": {
-      "title": "KeepNote",
-      "description": "User notes synced securely to Firestore acting as either a Keep fallback or direct database entity.",
-      "type": "object",
-      "properties": {
-        "id": { "type": "string" },
         "title": { "type": "string" },
-        "body": { "type": "string" },
-        "timestamp": { "type": "string" }
+        "preview": { "type": "string" },
+        "timestamp": { "type": "string" },
+        "updatedAt": { "type": "string" },
+        "messages": { "type": "array" }
       },
-      "required": ["id", "title", "body"]
+      "required": ["id"]
     },
-    "ChatMessage": {
-      "title": "ChatMessage",
-      "description": "Messages from collaborative chat channels synced to Firestore.",
+    "JarvisMemory": {
+      "title": "JarvisMemory",
+      "description": "Long-term remembered facts, instructions, or preferences for Jarvis.",
       "type": "object",
       "properties": {
         "id": { "type": "string" },
-        "spaceId": { "type": "string" },
-        "sender": { "type": "string" },
         "text": { "type": "string" },
-        "timestamp": { "type": "string" }
+        "timestamp": { "type": "string" },
+        "updatedAt": { "type": "string" }
       },
-      "required": ["id", "spaceId", "sender", "text"]
+      "required": ["id", "text"]
     },
-    "UserFeedback": {
-      "title": "UserFeedback",
-      "description": "Student or operator feedback logs specifying suggestions, bugs, or general feedback experience.",
+    "JarvisBehaviorRule": {
+      "title": "JarvisBehaviorRule",
+      "description": "Behavioral rule and custom persona guideline for Jarvis.",
       "type": "object",
       "properties": {
         "id": { "type": "string" },
-        "feedbackType": { "type": "string" },
-        "message": { "type": "string" },
-        "timestamp": { "type": "string" }
+        "rule": { "type": "string" },
+        "enabled": { "type": "boolean" },
+        "timestamp": { "type": "string" },
+        "updatedAt": { "type": "string" }
       },
-      "required": ["id", "feedbackType", "message"]
+      "required": ["id", "rule"]
     }
   },
   "firestore": {
-    "/operators/{operatorId}": {
+    "/users/{userId}": {
       "schema": "UserProfile",
       "description": "Document holding setting parameters, personal information, and avatar data URL."
     },
-    "/operators/{operatorId}/dialogues/{dialogueId}": {
-      "schema": "ChatDialogue",
-      "description": "Sub-collection of interaction dialogues with timestamps."
+    "/users/{userId}/chat_sessions/{sessionId}": {
+      "schema": "ChatSession",
+      "description": "Sub-collection of chat sessions and conversation threads."
     },
-    "/operators/{operatorId}/keep_notes/{noteId}": {
-      "schema": "KeepNote",
-      "description": "Sub-collection for keeping notes synced with Firestore."
+    "/users/{userId}/jarvis_memories/{memoryId}": {
+      "schema": "JarvisMemory",
+      "description": "Sub-collection of long term learned memories."
     },
-    "/operators/{operatorId}/chat_messages/{messageId}": {
-      "schema": "ChatMessage",
-      "description": "Sub-collection for storing community or room-specific messages."
-    },
-    "/operators/{operatorId}/feedbacks/{feedbackId}": {
-      "schema": "UserFeedback",
-      "description": "Sub-collection of user submitted feedback reports."
+    "/users/{userId}/jarvis_behavior_rules/{ruleId}": {
+      "schema": "JarvisBehaviorRule",
+      "description": "Sub-collection of dynamic behavioral rules."
     }
   }
 }

@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from "react";
-import { motion, AnimatePresence } from "motion/react";
+import { motion} from "motion/react";
 
 interface RoboticFaceProps {
   status: "idle" | "listening" | "thinking" | "speaking";
   emotion?: "normal" | "happy" | "angry" | "cry" | "laughing" | "surprised" | "disturbed" | "sleepy" | "love" | "contemplative" | "bored" | "skeptical";
-  onEmotionChange?: (emo: "normal" | "happy" | "angry" | "cry" | "laughing" | "surprised" | "disturbed" | "sleepy" | "love" | "contemplative" | "bored" | "skeptical") => void;
+  
 }
 
-export default function RoboticFace({ status, emotion: propEmotion = "normal", onEmotionChange }: RoboticFaceProps) {
+export default function RoboticFace({ status, emotion: propEmotion = "normal"}: RoboticFaceProps) {
   const [blink, setBlink] = useState(false);
   const [localEmotion, setLocalEmotion] = useState<"normal" | "happy" | "angry" | "cry" | "laughing" | "surprised" | "disturbed" | "sleepy" | "love" | "contemplative" | "bored" | "skeptical">("normal");
   const [speechVolume, setSpeechVolume] = useState(0);
@@ -64,14 +64,25 @@ export default function RoboticFace({ status, emotion: propEmotion = "normal", o
     setLocalEmotion(propEmotion);
   }, [propEmotion]);
 
-  // Trigger eyes blinking naturally during idle
+  // Trigger eyes blinking naturally at random intervals
   useEffect(() => {
     if (status !== "idle" || localEmotion !== "normal") return;
-    const interval = setInterval(() => {
+    
+    let timeoutId: NodeJS.Timeout;
+    
+    const triggerBlink = () => {
       setBlink(true);
       setTimeout(() => setBlink(false), 150);
-    }, 4000);
-    return () => clearInterval(interval);
+      
+      // Next blink between 2s and 6s
+      const nextInterval = Math.random() * 4000 + 2000;
+      timeoutId = setTimeout(triggerBlink, nextInterval);
+    };
+    
+    // Initial random delay before first blink
+    timeoutId = setTimeout(triggerBlink, Math.random() * 3000 + 1000);
+    
+    return () => clearTimeout(timeoutId);
   }, [status, localEmotion]);
 
   // Determine robot face colors and styles depending on the active state and emotion
@@ -371,13 +382,17 @@ export default function RoboticFace({ status, emotion: propEmotion = "normal", o
 
     if (localEmotion === "surprised") {
       return (
-        <g>
+        <motion.g
+          initial={{ scale: 0.8 }}
+          animate={{ scale: 1 }}
+          transition={{ type: "spring", stiffness: 200, damping: 10 }}
+        >
           {/* Widened shocked eyes */}
-          <circle cx="65" cy="85" r="17" fill="none" stroke="#a855f7" strokeWidth="4" />
-          <circle cx="65" cy="85" r="6" fill="#00f3ff" />
-          <circle cx="135" cy="85" r="17" fill="none" stroke="#a855f7" strokeWidth="4" />
-          <circle cx="135" cy="85" r="6" fill="#00f3ff" />
-        </g>
+          <motion.circle cx="65" cy="85" r="17" fill="none" stroke="#a855f7" strokeWidth="4" animate={{ r: [15, 18, 17] }} transition={{ duration: 0.3 }} />
+          <motion.circle cx="65" cy="85" r="6" fill="#00f3ff" animate={{ r: [4, 7, 6] }} transition={{ duration: 0.3 }} />
+          <motion.circle cx="135" cy="85" r="17" fill="none" stroke="#a855f7" strokeWidth="4" animate={{ r: [15, 18, 17] }} transition={{ duration: 0.3 }} />
+          <motion.circle cx="135" cy="85" r="6" fill="#00f3ff" animate={{ r: [4, 7, 6] }} transition={{ duration: 0.3 }} />
+        </motion.g>
       );
     }
 
@@ -462,16 +477,20 @@ export default function RoboticFace({ status, emotion: propEmotion = "normal", o
 
     if (localEmotion === "contemplative") {
       return (
-        <g>
+        <motion.g
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.5 }}
+        >
           {/* contemplative eye design */}
           <ellipse cx="65" cy="85" rx="14" ry={blink ? "1" : "10"} fill="#c084fc" />
-          <circle cx="65" cy="85" r="3" fill="#000" className="opacity-80" />
+          <motion.circle cx="65" cy="85" r="3" fill="#000" className="opacity-80" animate={{ x: [0, 4, 0] }} transition={{ repeat: Infinity, duration: 4 }} />
           <ellipse cx="135" cy="85" rx="14" ry={blink ? "1" : "13"} fill="#c084fc" />
-          <circle cx="135" cy="85" r="4" fill="#000" className="opacity-80" />
+          <motion.circle cx="135" cy="85" r="4" fill="#000" className="opacity-80" animate={{ x: [0, 4, 0] }} transition={{ repeat: Infinity, duration: 4 }} />
           {/* Thinking overlay paths */}
-          <path d="M 52 68 Q 65 65 78 68" stroke="#e9d5ff" strokeWidth="2.5" fill="none" strokeLinecap="round" />
-          <path d="M 122 65 Q 135 62 148 65" stroke="#e9d5ff" strokeWidth="2.5" fill="none" strokeLinecap="round" />
-        </g>
+          <motion.path d="M 52 68 Q 65 65 78 68" stroke="#e9d5ff" strokeWidth="2.5" fill="none" strokeLinecap="round" animate={{ y: [0, -3, 0] }} transition={{ repeat: Infinity, duration: 2 }} />
+          <motion.path d="M 122 65 Q 135 62 148 65" stroke="#e9d5ff" strokeWidth="2.5" fill="none" strokeLinecap="round" animate={{ y: [0, -3, 0] }} transition={{ repeat: Infinity, duration: 2 }} />
+        </motion.g>
       );
     }
 
@@ -492,16 +511,20 @@ export default function RoboticFace({ status, emotion: propEmotion = "normal", o
 
     if (localEmotion === "skeptical") {
       return (
-        <g>
+        <motion.g
+          initial={{ y: -5 }}
+          animate={{ y: 0 }}
+          transition={{ type: "spring", stiffness: 300, damping: 15 }}
+        >
           {/* skeptical 🤨 asymmetrical design */}
           <ellipse cx="65" cy="85" rx="14" ry={blink ? "1" : "6"} fill="#fb923c" />
           <circle cx="65" cy="85" r="2.5" fill="#000" className="opacity-80" />
-          <path d="M 48 72 L 80 75" stroke="#ffedd5" strokeWidth="3" strokeLinecap="round" />
+          <motion.path d="M 48 72 L 80 75" stroke="#ffedd5" strokeWidth="3" strokeLinecap="round" animate={{ y: [0, 4, 0] }} transition={{ repeat: Infinity, duration: 2 }} />
 
           <ellipse cx="135" cy="85" rx="14" ry={blink ? "1" : "15"} fill="#fb923c" />
           <circle cx="135" cy="85" r="4.5" fill="#000" className="opacity-80" />
-          <path d="M 120 62 Q 135 50 150 62" stroke="#ffedd5" strokeWidth="3.5" fill="none" strokeLinecap="round" />
-        </g>
+          <motion.path d="M 120 62 Q 135 50 150 62" stroke="#ffedd5" strokeWidth="3.5" fill="none" strokeLinecap="round" animate={{ y: [0, -4, 0] }} transition={{ repeat: Infinity, duration: 2 }} />
+        </motion.g>
       );
     }
 
@@ -977,114 +1000,8 @@ export default function RoboticFace({ status, emotion: propEmotion = "normal", o
     );
   };
 
-  const getAnimationVariants = (type: "eyes" | "mouth") => {
-    // Custom transitions tailored for physical emotion aesthetics
-    const transition = {
-      type: "spring",
-      damping: 15,
-      stiffness: 120,
-    };
 
-    switch (localEmotion) {
-      case "angry":
-        return {
-          initial: { scale: 0.6, opacity: 0, rotate: -15, y: -5 },
-          animate: { scale: 1, opacity: 1, rotate: 0, y: 0, transition },
-          exit: { scale: 0.5, opacity: 0, rotate: 15, y: 15, transition: { duration: 0.2 } }
-        };
-      case "cry":
-        return {
-          initial: { y: -20, opacity: 0, scale: 0.8 },
-          animate: { y: 0, opacity: 1, scale: 1, transition },
-          exit: { y: 25, opacity: 0, scale: 0.7, transition: { duration: 0.25 } }
-        };
-      case "laughing":
-        return {
-          initial: { y: 15, scale: 0.7, opacity: 0 },
-          animate: { y: 0, scale: 1, opacity: 1, transition: { type: "spring", damping: 10, stiffness: 150 } },
-          exit: { y: -15, scale: 0.8, opacity: 0, transition: { duration: 0.18 } }
-        };
-      case "happy":
-        return {
-          initial: { scale: 0.5, opacity: 0, rotate: -10 },
-          animate: { scale: 1, opacity: 1, rotate: 0, transition: { type: "spring", damping: 12, stiffness: 140 } },
-          exit: { scale: 0.4, opacity: 0, rotate: 10, transition: { duration: 0.2 } }
-        };
-      case "surprised":
-        return {
-          initial: { scale: 1.4, opacity: 0 },
-          animate: { scale: 1, opacity: 1, transition },
-          exit: { scale: 1.4, opacity: 0, transition: { duration: 0.2 } }
-        };
-      case "disturbed":
-        return {
-          initial: { x: -15, opacity: 0, scale: 0.9 },
-          animate: { x: 0, opacity: 1, scale: 1, transition: { type: "spring", damping: 8, stiffness: 200 } },
-          exit: { x: 15, opacity: 0, scale: 0.9, transition: { duration: 0.15 } }
-        };
-      case "sleepy":
-        return {
-          initial: { scaleY: 0.1, y: -5, opacity: 0 },
-          animate: { scaleY: 1, y: 0, opacity: 1, transition: { duration: 0.4 } },
-          exit: { scaleY: 0.1, y: 5, opacity: 0, transition: { duration: 0.3 } }
-        };
-      case "love":
-        return {
-          initial: { scale: 0, rotate: -30, opacity: 0 },
-          animate: { scale: 1, rotate: 0, opacity: 1, transition: { type: "spring", damping: 11, stiffness: 130 } },
-          exit: { scale: 0, rotate: 30, opacity: 0, transition: { duration: 0.2 } }
-        };
-      case "contemplative":
-        return {
-          initial: { scale: 0.9, opacity: 0, rotate: -5 },
-          animate: { scale: 1, opacity: 1, rotate: 0, transition },
-          exit: { scale: 0.9, opacity: 0, transition: { duration: 0.2 } }
-        };
-      case "bored":
-        return {
-          initial: { scaleY: 0.8, opacity: 0 },
-          animate: { scaleY: 1, opacity: 1, transition },
-          exit: { scaleY: 0.8, opacity: 0, transition: { duration: 0.2 } }
-        };
-      case "skeptical":
-        return {
-          initial: { scaleX: 0.9, opacity: 0, rotate: -3 },
-          animate: { scaleX: 1, opacity: 1, rotate: 0, transition },
-          exit: { scaleX: 0.9, opacity: 0, transition: { duration: 0.18 } }
-        };
-      case "normal":
-      default:
-        // Transition based on active status if normal emotion
-        if (status === "listening") {
-          return {
-            initial: { scale: 0.7, opacity: 0, y: 10 },
-            animate: { scale: 1, opacity: 1, y: 0, transition },
-            exit: { scale: 0.7, opacity: 0, y: -10, transition: { duration: 0.2 } }
-          };
-        }
-        if (status === "thinking") {
-          return {
-            initial: { scaleX: 0.5, opacity: 0 },
-            animate: { scaleX: 1, opacity: 1, transition },
-            exit: { scaleX: 0.5, opacity: 0, transition: { duration: 0.2 } }
-          };
-        }
-        if (status === "speaking") {
-          return {
-            initial: { scale: 0.9, opacity: 0 },
-            animate: { scale: 1, opacity: 1, transition },
-            exit: { scale: 0.9, opacity: 0, transition: { duration: 0.15 } }
-          };
-        }
-        return {
-          initial: { scale: 0.8, opacity: 0 },
-          animate: { scale: 1, opacity: 1, transition },
-          exit: { scale: 0.8, opacity: 0, transition: { duration: 0.2 } }
-        };
-    }
-  };
-
-  return (
+    return (
     <motion.div 
       initial={{ opacity: 0, scale: 0.85, y: 15 }}
       animate={{ opacity: 1, scale: 1, y: 0 }}
@@ -1092,38 +1009,7 @@ export default function RoboticFace({ status, emotion: propEmotion = "normal", o
       transition={{ type: "spring", damping: 20, stiffness: 100 }}
       className="flex flex-col items-center justify-center p-1 relative overflow-visible max-w-xs sm:max-w-sm mx-auto w-full group transition-all duration-300"
     >
-      {/* Outer ambient futuristic halo with dynamic glow based on emotion */}
-      <motion.div
-        animate={getPulseAnimation()}
-        transition={{
-          repeat: Infinity,
-          duration: localEmotion === "disturbed" ? 0.2 : 2.5,
-          ease: "easeInOut",
-        }}
-        className="absolute inset-0 -z-10 blur-3xl rounded-full"
-        style={{
-          background: `radial-gradient(circle, ${currentTheme.glow} 0%, transparent 70%)`,
-        }}
-      />
-
-      {/* Secondary colored ring glow for specific emotions */}
-      {localEmotion !== "normal" && (
-        <motion.div
-          animate={{
-            scale: [1, 1.2, 1],
-            opacity: [0.1, 0.3, 0.1],
-          }}
-          transition={{
-            repeat: Infinity,
-            duration: 3,
-            ease: "linear",
-          }}
-          className="absolute inset-0 -z-20 blur-2xl rounded-full opacity-25"
-          style={{
-            backgroundColor: currentTheme.glow,
-          }}
-        />
-      )}
+      {/* Robotic Face Frame container */}
 
       {/* Animated Face Frame with fixed borders sync with theme colors */}
       <motion.div

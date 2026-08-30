@@ -20,25 +20,7 @@ export interface Message {
   canvasCodeText?: string;
   canvasWritingText?: string;
   canvasSlides?: Array<{ title: string; bullets: string[] }>;
+  savedMemoryText?: string;
 }
 
-export interface Flashcard {
-  id: string;
-  front: string;
-  back: string;
-}
 
-export interface StudyTask {
-  id: string;
-  title: string;
-  completed: boolean;
-  dueDate?: string;
-}
-
-export interface CreatorAsset {
-  id: string;
-  type: "image" | "video";
-  prompt: string;
-  url: string;
-  timestamp: string;
-}

@@ -62,7 +62,7 @@ export default function FluidTypewriter({
           variants={wordVariants}
           className="inline-block transform-gpu origin-center"
           style={{
-            textShadow: glow ? "0 0 8px rgba(0, 243, 255, 0.3)" : "none",
+            
             willChange: "transform, opacity"
           }}
         >

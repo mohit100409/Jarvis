@@ -3,8 +3,6 @@ import {
   Send, 
   Mail, 
   Check, 
-  Clock, 
-  Plus, 
   Trash2, 
   Sparkles, 
   Radio 
@@ -35,7 +33,7 @@ export function MessageComposerCard({ payload }: { payload?: any }) {
   };
 
   return (
-    <div className="mt-3 p-3.5 rounded-xl border border-[#00f3ff]/35 bg-[#040c24]/80 text-white font-mono space-y-3 shadow-[0_0_15px_rgba(0,243,255,0.08)]">
+    <div className="mt-3 p-3.5 rounded-xl border border-[#00f3ff]/35 bg-[#040c24]/80 text-white font-mono space-y-3">
       <div className="flex items-center justify-between border-b border-[#00f3ff]/20 pb-2">
         <span className="text-[9.5px] text-[#00f3ff] uppercase font-black tracking-widest flex items-center gap-1.5 animate-pulse">
           <Radio size={12} className="text-[#00f3ff]" />
@@ -83,7 +81,7 @@ export function MessageComposerCard({ payload }: { payload?: any }) {
 
           <button
             onClick={handleTransmit}
-            className="w-full py-2 bg-gradient-to-r from-sky-600 to-cyan-500 hover:from-sky-500 hover:to-cyan-400 text-black font-black uppercase text-[10px] tracking-widest rounded-lg transition-all flex items-center justify-center gap-1.5 cursor-pointer shadow-[0_0_10px_rgba(0,195,255,0.2)]"
+            className="w-full py-2 bg-gradient-to-r from-sky-600 to-cyan-500 hover:from-sky-500 hover:to-cyan-400 text-black font-black uppercase text-[10px] tracking-widest rounded-lg transition-all flex items-center justify-center gap-1.5 cursor-pointer"
           >
             <Send size={11} className="stroke-[2.5]" />
             Authorize & Transmit Dispatch
@@ -106,7 +104,7 @@ export function MessageComposerCard({ payload }: { payload?: any }) {
 
       {status === "sent" && (
         <div className="py-3 px-2 border border-emerald-500/25 bg-emerald-950/25 rounded-lg space-y-2 text-center">
-          <div className="w-7 h-7 bg-emerald-500/10 rounded-full flex items-center justify-center mx-auto text-emerald-400 shadow-[0_0_10px_rgba(16,185,129,0.2)]">
+          <div className="w-7 h-7 bg-emerald-500/10 rounded-full flex items-center justify-center mx-auto text-emerald-400">
             <Check size={14} className="stroke-[3]" />
           </div>
           <div className="space-y-0.5">
@@ -167,7 +165,7 @@ export function EmailBoxCard() {
   };
 
   return (
-    <div className="mt-3 p-3.5 rounded-xl border border-[#00f3ff]/35 bg-[#040c24]/85 text-white font-mono space-y-3.5 shadow-[0_0_15px_rgba(0,243,255,0.08)]">
+    <div className="mt-3 p-3.5 rounded-xl border border-[#00f3ff]/35 bg-[#040c24]/85 text-white font-mono space-y-3.5">
       <div className="flex items-center justify-between border-b border-[#00f3ff]/20 pb-2">
         <span className="text-[9.5px] text-[#00f3ff] uppercase font-black tracking-widest flex items-center gap-1.5">
           <Mail size={12} className="text-[#00f3ff]" />
@@ -300,7 +298,7 @@ export function AutomationScheduleCard() {
   };
 
   return (
-    <div className="mt-3 p-3.5 rounded-xl border border-[#00f3ff]/35 bg-[#040c24]/85 text-white font-mono space-y-3.5 shadow-[0_0_15px_rgba(0,243,255,0.08)]">
+    <div className="mt-3 p-3.5 rounded-xl border border-[#00f3ff]/35 bg-[#040c24]/85 text-white font-mono space-y-3.5">
       <div className="flex items-center justify-between border-b border-[#00f3ff]/20 pb-2">
         <span className="text-[9.5px] text-[#00f3ff] uppercase font-black tracking-widest flex items-center gap-1.5 font-bold">
           <Sparkles size={12} className="text-[#00f3ff]" />
